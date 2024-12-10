@@ -60,3 +60,27 @@ Finally, I extracted the average hsv values of the leaf to compare colors, anoth
 
 ![leaf 1 segmentation](./report_images/leaf_1.png)
 ![leaf 2 segmentation](./report_images/leaf_2.png)
+
+# Part 4 - Classification
+
+My code contains several approaches to classification. Originally, my goal was to utilize features and statistics extracted during the last project update to classify the leaves in my dataset.
+
+For comparison, I also did some classification using Convolutional Neural Networks with the processed images I had produced, with grayscale equalized images of the leaves, and finally with the original color dataset. As well as some in between to satisfy my own curiosity.
+
+With just statistics, I first used a neural network with Dense layers and consistently got around 70% accuracy, no matter what I tweaked. Later on I used an RBF classifier and got around 65%, so the neural network had only a small improvement for a lot more complexity.
+
+With my processed photos, a binary of the leaf highlighting the skeleton of the veins and texture, I got a low accuracy that surprised me - generally around 35% throughout my trials. I thought that the features highlighted by the processing would allow for a generally high accuracy. It was after all where I pulled many of the statistics from. Instead it was a significant decrease.
+
+Next I tried using grayscale images of the original leaves. These were overall a successful improvement over anything I manually had a part in, with about 80-85% accuracy across different trials.
+
+When using the original dataset, I saw the highest accuracy scores overall. Specifically, one of my tests with an extra convolutional layer (making it 4 convolutional layers and 2 dense layers) I got a 95% accuracy. For my use case, while the color channels were significantly slower moving through the model than grayscale images, both versions did not take too long to train, so it seemed worth it to me to process the original image with color.
+
+Finally, I also tried my original color dataset with my manually produced masks applied. Surprisingly, this wasn't the improvement I thought it would be. The model seemed to have difficulty taking advantage of the segmentation. It only ended up with around an 85-90% accuracy. This could be because I didn't take the right approach to informing the model of the segmentation, as I just masked my input images before putting them through a very similar convolutional neural network.
+
+One of the biggest issues I faced throughout the process of creating these neural networks was overfitting to my data set. Originally, when first creating my model that used the features I had extracted manually, I was consistently getting an accuracy on the training set of 100%. When applied to the test data, it would be a poor performance, often below 50%. Consulting chatgpt for some direction, I discovered the tactics of having dropout between layers and the early stopping callback. Dropout is where some neurons are randomly ignored during different forward passes or backward propagation steps, forcing the model to produce more generalized solutions. Early stopping checks after every few epochs if the accuracy over the test data is starting to significantly diminish. Finally, I did my model creation by starting simple and adding complexity.
+
+It is worth mentioning as well my attempts and successes at dimension reduction. Originally with the manually created statistics, I found that PCA didn't generally help my results in a marginal way, or significantly worsened them. One of these attempts is shown as a graph in the run code. I did end up using max-pooling between some of my convolutional layers, to both fight overfitting and reduce the complexity and save some time on computation.
+
+Overall, much of my time was spent trying small tweaks, adding and subtracting layers, and changing hyperparameters. All of these things taught me more about the best approaches to model construction, but in the future I think implementing a grid-search like approach would be an improvement. There are some variables, such as kernel size of number of kernels per convolutional layer, that I hardly messed around with, because I was trying to stay methodical without having to manually grid-search.
+
+
