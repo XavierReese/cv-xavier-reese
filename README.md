@@ -11,6 +11,8 @@ Finally, I will tackle the program from both a CNN-based and non-deep-learning b
 
 So overall, this project will be about collecting a variety of datasets of both trees and possibly leaves, to analyze the power of computer vision to classify them during different seasons, and with larger or smaller geographical scopes. I don't expect to be able to write a program that recognizes world or country-wide trees without geographical input, but I'm interested to see how large I can push the scope of the program to be while maintaining a useful level of accuracy.
 
+_Note: After discussion with Adam, decided to approach project by classifying plants by their leaves, due to a far better availability of data sets_
+
 ### Part 2: Data Acquisition
 
 I found a database of images of 12 different types of leaves, with or without different diseases. It includes, however, a healthy dataset for each with 1000+ images. I will simply split these in a 60/20/20 fashion to create my training/testing/unknown datasets. This way there are no meaningful differences between the datasets for now.
@@ -83,4 +85,16 @@ It is worth mentioning as well my attempts and successes at dimension reduction.
 
 Overall, much of my time was spent trying small tweaks, adding and subtracting layers, and changing hyperparameters. All of these things taught me more about the best approaches to model construction, but in the future I think implementing a grid-search like approach would be an improvement. There are some variables, such as kernel size of number of kernels per convolutional layer, that I hardly messed around with, because I was trying to stay methodical without having to manually grid-search.
 
+# Part 5 - Final Update
 
+My final update was to test my highest-performing model on unseen data. To do this, I used augmented and processed data from my dataset, separated at the beginning of my code and kept separate until the end. These images were flipped, rotated, had noise added, contrast changed, and brightness changed, all to simulate an unknown environment.
+
+Ultimately, my results were significantly worse than previously seen. With the original test set, I was getting 85%-95% accuracy with a classification model trained on the original unprocessed color images from my data set. With the augmented and processed images, I got a ~45% accuracy.
+
+I believe the reason for the drop in accuracy was simple: my training data didn't have enough variance. The ultimate goal of a program like this is to someday identify leaves presented in a normal context which you may shoot from your phone camera. This means the brightness, contrast, noise, etc. will all be much less controlled. To fix this, training a model with this augmented data would be helpful. Additionally, training it to segment the leaf from more complex backgrounds would be necessary.
+
+As part of some further searching, beyond what I have committed to github, I also tried training my same model on altered data. The result was an overall decrease - 72% instead of ~90%. However, running that model on the "unseen" testing data (also augmented/processed) gave me a 55% accuracy. A 10% increase. This was an improvement but honestly a surprisingly small one, given that it should have had the same amount of variance now as what the model was tested on. I believe that this may have segmentation to blame. This was confirmed for me by running my model for pre-segmented images on the augmented data. Where previously it actually under-performed the unaltered data by 5-10% accuracy, now I was getting better numbers, around 80%.
+
+For future iterations, I would really focus on segmenting the leaf and having my model run on the leaf alone, to separate all other variables out as much as possible, as well as refining the model parameters themselves to better identify the leaf overall.
+
+I have been inspired to keep on working on this project over winter break, when I have more time and not so many finals to worry about. Hopefully it will either become a usable application that I can share as a project, or it will be a stepping stone to bigger things. Thank you for a wonderful class!
