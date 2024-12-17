@@ -98,3 +98,5 @@ As part of some further searching, beyond what I have committed to github, I als
 For future iterations, I would really focus on segmenting the leaf and having my model run on the leaf alone, to separate all other variables out as much as possible, as well as refining the model parameters themselves to better identify the leaf overall.
 
 I have been inspired to keep on working on this project over winter break, when I have more time and not so many finals to worry about. Hopefully it will either become a usable application that I can share as a project, or it will be a stepping stone to bigger things. Thank you for a wonderful class!
+
+[SLIDESHOW](https://docs.google.com/presentation/d/1F7SsVAo3GYppWc0F982Jrn5zXVLSHLFNAG3YkLU6AdU/edit?usp=sharing)
